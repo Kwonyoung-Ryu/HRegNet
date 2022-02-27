@@ -5,19 +5,19 @@ import torch.nn.functional as F
 from .layers import KeypointDetector, DescExtractor, CoarseReg, FineReg, WeightedSVDHead
 
 class HierFeatureExtraction(nn.Module):
-    def __init__(self, args):
+    def __init__(self):
         super(HierFeatureExtraction, self).__init__()
 
-        self.use_fps = args.use_fps
-        self.use_weights = args.use_weights
+        self.use_fps = True 
+        self.use_weights = True
 
         self.detector_1 = KeypointDetector(nsample=1024, k=64, in_channels=0, out_channels=[32,32,64], fps=self.use_fps)
         self.detector_2 = KeypointDetector(nsample=512, k=32, in_channels=64, out_channels=[64,64,128], fps=self.use_fps)
         self.detector_3 = KeypointDetector(nsample=256, k=16, in_channels=128, out_channels=[128,128,256], fps=self.use_fps)
 
-        if args.freeze_detector:
-            for p in self.parameters():
-                p.requires_grad = False
+        #if args.freeze_detector:
+        for p in self.parameters():
+            p.requires_grad = False
         
         self.desc_extractor_1 = DescExtractor(in_channels=0, out_channels=[32,32,64], C_detector=64, desc_dim=64)
         self.desc_extractor_2 = DescExtractor(in_channels=64, out_channels=[64,64,128], C_detector=128, desc_dim=128)
@@ -59,14 +59,14 @@ class HierFeatureExtraction(nn.Module):
 
 class HRegNet(nn.Module):
 
-    def __init__(self, args):
+    def __init__(self):
         super(HRegNet, self).__init__()
-        self.feature_extraction = HierFeatureExtraction(args)
+        self.feature_extraction = HierFeatureExtraction()
 
         # Freeze pretrained features when train
-        if args.freeze_feats:
-            for p in self.parameters():
-                p.requires_grad = False
+        #if args.freeze_feats:
+        for p in self.parameters():
+            p.requires_grad = False
         
         self.coarse_corres = CoarseReg(k=8, in_channels=256, use_sim=True, use_neighbor=True)
         self.fine_corres_2 = FineReg(k=8, in_channels=128)

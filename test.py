@@ -4,6 +4,7 @@ import torch
 
 from data.kitti_data import KittiDataset
 from data.nuscenes_data import NuscenesDataset
+from data.postech import PostechDataset
 
 from models.models import HRegNet
 from models.utils import calc_error_np, set_seed
@@ -38,6 +39,9 @@ def test(args):
     elif args.dataset == 'nuscenes':
         test_seqs = ['test']
         test_dataset = NuscenesDataset(args.root, test_seqs, args.npoints, args.voxel_size, args.data_list, args.augment)
+    elif args.dataset == 'postech':
+        test_seqs = ['test']
+        test_dataset = PostechDataset(args.root, test_seqs, args.npoints, args.voxel_size, args.data_list, args.augment)
     else:
         raise('Not implemented')
     

@@ -1,0 +1,4 @@
+# ninja log v5
+0	11335	1645978139178421197	/root/code/Ray-LiDAR/submodule/HRegNet/models/PointUtils/build/temp.linux-x86_64-3.7/src/furthest_point_sampling.o	3f3631b8a34dfc40
+43	34834	1645978162671305217	/root/code/Ray-LiDAR/submodule/HRegNet/models/PointUtils/build/temp.linux-x86_64-3.7/src/point_utils_api.o	43571ca8801394b2
+32	70606	1645978198444653441	/root/code/Ray-LiDAR/submodule/HRegNet/models/PointUtils/build/temp.linux-x86_64-3.7/src/furthest_point_sampling_gpu.o	dc0a611be6dfa1a8
